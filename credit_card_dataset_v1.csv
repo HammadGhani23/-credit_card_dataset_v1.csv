@@ -1,0 +1,30 @@
+import pandas as pd
+df=pd.read_csv(r'C:\Users\application_record.csv ')
+print(df)
+print(df.head())
+print(df.isnull().sum())
+df.dropna(inplace=True)
+df.fillna(df.mean(), inplace=True)
+df = pd.get_dummies(df, columns=['CategoryColumn'])
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['CategoryColumn'] = le.fit_transform(df['CategoryColumn'])
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+df[['NumericalColumn1', 'NumericalColumn2']] = scaler.fit_transform(df[['NumericalColumn1', 'NumericalColumn2']])
+print(df.duplicated().sum())
+df.drop_duplicates(inplace=True)
+print(df.describe())
+print(df['CategoryColumn'].mode())
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+df['NumericalColumn'].hist()
+plt.show()
+sns.boxplot(x=df['NumericalColumn'])
+plt.show()
+
+
+
+
+
